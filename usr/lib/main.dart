@@ -1,3 +1,7 @@
+import 'package:couldai_user_app/models/post_model.dart';
+import 'package:couldai_user_app/models/story_model.dart';
+import 'package:couldai_user_app/widgets/post_widget.dart';
+import 'package:couldai_user_app/widgets/story_widget.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -7,114 +11,161 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Instagram',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        primaryColor: Colors.white,
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.white,
+          elevation: 1.0,
+          iconTheme: IconThemeData(color: Colors.black),
+        ),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const HomeScreen(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
 
-  void _incrementCounter() {
+  void _onItemTapped(int index) {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      _selectedIndex = index;
     });
   }
 
+  final List<Story> _stories = [
+    Story(
+        username: 'Your Story',
+        avatarUrl: 'https://i.pravatar.cc/150?u=a042581f4e29026704d'),
+    Story(
+        username: 'user1',
+        avatarUrl: 'https://i.pravatar.cc/150?u=a042581f4e29026704e'),
+    Story(
+        username: 'user2',
+        avatarUrl: 'https://i.pravatar.cc/150?u=a042581f4e29026704f'),
+    Story(
+        username: 'user3',
+        avatarUrl: 'https://i.pravatar.cc/150?u=a042581f4e29026704a'),
+    Story(
+        username: 'user4',
+        avatarUrl: 'https://i.pravatar.cc/150?u=a042581f4e29026704b'),
+    Story(
+        username: 'user5',
+        avatarUrl: 'https://i.pravatar.cc/150?u=a042581f4e29026704c'),
+  ];
+
+  final List<Post> _posts = [
+    Post(
+      username: 'user1',
+      userAvatarUrl: 'https://i.pravatar.cc/150?u=a042581f4e29026704e',
+      postUrl: 'https://picsum.photos/seed/picsum/400/400',
+      caption: 'This is a beautiful landscape!',
+      likes: 1023,
+    ),
+    Post(
+      username: 'user2',
+      userAvatarUrl: 'https://i.pravatar.cc/150?u=a042581f4e29026704f',
+      postUrl: 'https://picsum.photos/seed/picsum2/400/400',
+      caption: 'Having fun with friends.',
+      likes: 542,
+    ),
+    Post(
+      username: 'user3',
+      userAvatarUrl: 'https://i.pravatar.cc/150?u=a042581f4e29026704a',
+      postUrl: 'https://picsum.photos/seed/picsum3/400/400',
+      caption: 'My new puppy!',
+      likes: 2312,
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: const Text(
+          'Instagram',
+          style: TextStyle(
+            fontFamily: 'Billabong',
+            fontSize: 32.0,
+            color: Colors.black,
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add_box_outlined),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.favorite_border),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.send_outlined),
+            onPressed: () {},
+          ),
+        ],
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+      body: SingleChildScrollView(
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text('$_counter', style: Theme.of(context).textTheme.headlineMedium),
+          children: [
+            // Stories
+            SizedBox(
+              height: 110,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: _stories.length,
+                itemBuilder: (context, index) {
+                  return StoryWidget(story: _stories[index]);
+                },
+              ),
+            ),
+            const Divider(),
+            // Posts
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: _posts.length,
+              itemBuilder: (context, index) {
+                return PostWidget(post: _posts[index]);
+              },
+            ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.grey,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.movie_creation_outlined), label: 'Reels'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_bag_outlined), label: 'Shop'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline), label: 'Profile'),
+        ],
+      ),
     );
   }
 }
